@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s-pesbuk-deployment
+  namespace: staging
+  labels:
+    app: s-pesbuk-deployment
+    env: staging
+spec:
+  selector:
+    matchLabels:
+      app: s-pesbuk-deployment
+      env: staging
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: s-pesbuk-deployment
+        env: staging
+    spec:
+      containers:
+      - name: s-pesbuk-deployment
+        image: pujakesuma/pesbuk-secret:1.0
+        ports:
+        - containerPort: 80
+        env:  
+            - name: DB_HOST    
+              value: "database-1.cogsyqawtx3c.us-east-2.rds.amazonaws.com"
+            - name: DB_USER    
+              valueFrom:       
+                secretKeyRef:
+                  name: p-secret-fb
+                  key: DB_USER  
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: p-secret-fb
+                  key: DB_PASS

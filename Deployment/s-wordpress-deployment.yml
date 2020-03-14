@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s-wordpress-deployment
+  namespace: staging
+  labels:
+    app: s-wordpress-deployment
+    env: staging
+spec:
+  selector:
+    matchLabels:
+      app: s-wordpress-deployment
+      env: staging
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: s-wordpress-deployment
+        env: staging
+    spec:
+      containers:
+      - name: s-wordpress-deployment
+        image: pujakesuma/wordpress:1.0
+        ports:
+        - containerPort: 80
+        env:  
+            - name: DB_HOST    
+              value: "database-1.cogsyqawtx3c.us-east-2.rds.amazonaws.com"
+            - name: DB_USER    
+              valueFrom:       
+                secretKeyRef:
+                  name: s-secret-wp
+                  key: DB_USER  
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: s-secret-wp
+                  key: DB_PASS

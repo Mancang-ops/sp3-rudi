@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: p-wordpress-deployment
+  namespace: production
+  labels:
+    app: p-wordpress-deployment
+    env: production
+spec:
+  selector:
+    matchLabels:
+      app: p-wordpress-deployment
+      env: production
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: p-wordpress-deployment
+        env: production
+    spec:
+      containers:
+      - name: p-wordpress-deployment
+        image: pujakesuma/wordpress:2.0
+        ports:
+        - containerPort: 80

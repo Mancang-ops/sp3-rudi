@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: s-lp-deployment
+  namespace: staging
+  labels:
+    app: s-lp-deployment
+    env: staging
+spec:
+  selector:
+    matchLabels:
+      app: s-lp-deployment
+      env: staging
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: s-lp-deployment
+        env: staging
+    spec:
+      containers:
+      - name: s-lp-deployment
+        image: pujakesuma/nginx-lp:1.0
+        ports:
+        - containerPort: 80

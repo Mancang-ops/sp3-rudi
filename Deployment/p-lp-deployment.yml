@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: p-lp-deployment
+  namespace: production
+  labels:
+    app: p-lp-deployment
+    env: production
+spec:
+  selector:
+    matchLabels:
+      app: p-lp-deployment
+      env: production
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: p-lp-deployment
+        env: production
+    spec:
+      containers:
+      - name: p-lp-deployment
+        image: pujakesuma/nginx-lp:1.0
+        ports:
+        - containerPort: 80
